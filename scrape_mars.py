@@ -4,12 +4,19 @@ from splinter import Browser
 import pandas as pd
 
 # Mac
-# executable_path = {"executable_path": "/usr/local/bin/chromedriver"}
-# browser = Browser("chrome", **executable_path, headless=False)
+executable_path = {"executable_path": "/usr/local/bin/chromedriver"}
+browser = Browser("chrome", **executable_path, headless=False)
 
 # Windows
-executable_path = {"executable_path": "/Users/connor.roemelt/Downloads/chromedriver"}
-browser = Browser("chrome", **executable_path)
+#executable_path = {"executable_path": "/Users/connor.roemelt/Downloads/chromedriver"}
+# browser = Browser("chrome", **executable_path)
+
+def scrape_info():
+    mars_news()
+    mars_image()
+    mars_weather()
+    mars_facts()
+    mars_hemispheres()
 
 
 def mars_news():
@@ -17,7 +24,7 @@ def mars_news():
     browser.visit(news_url)
     html = browser.html
     soup = bs(html, 'html.parser')
-    news_title = soup.find('div', class_='content_title').get_text()
+    news_title = soup.find_all('div', class_='content_title')[1].get_text()
     news_p = soup.find('div', class_='article_teaser_body').get_text()
     output = [news_title, news_p]
     return output
